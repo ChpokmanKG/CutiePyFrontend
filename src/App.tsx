@@ -24,7 +24,7 @@ const App: React.FC = () => {
             <Container>
               <PageHeaderWrap />
               <Switch>
-                <Route exact path={"/login"} component={LoginPage}/>
+                <Route exact path={"/"} component={LoginPage}/>
                 <Route exact path={"/register"} component={Register}/>
                 <Route exact path={['/','/packs']} component={MainTable}/>
                 <Route exact path={'/packs/:id'} component={MainTable}/>

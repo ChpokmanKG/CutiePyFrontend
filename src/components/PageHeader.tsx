@@ -76,7 +76,7 @@ const PageHeader: any = () => {
 }
 
 const PageHeaderWrap = (props: RouteComponentProps<any>) => {
-  if(props.location.pathname !== '/login' && props.location.pathname !== '/register') {
+  if(props.location.pathname !== '/' && props.location.pathname !== '/register') {
     return <PageHeader />
   }else return null;
 };

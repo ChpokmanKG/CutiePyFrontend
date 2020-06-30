@@ -43,7 +43,7 @@ const Sidebar: any = () => {
             </Collapse>
             <NavItem className="w-100">
               <NavLink tag={"span"}>
-                <Link to={'/login'}>
+                <Link to={'/'}>
                   <img className="sidebar__image" src={Logout} alt="Logout" />
                   <span className="ml-2 text-light">Logout</span>
                 </Link>
@@ -56,7 +56,7 @@ const Sidebar: any = () => {
 };
 
 const SideBarWrap = (props: RouteComponentProps<any>) => {
-  if(props.location.pathname !== '/login' && props.location.pathname !== '/register') {
+  if(props.location.pathname !== '/' && props.location.pathname !== '/register') {
     return <Sidebar />
   }else return null;
 }
