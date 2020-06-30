@@ -15,7 +15,7 @@ const Sidebar: any = () => {
       <Col md={2} xs={4} sm={4} className="pl-0">
         <section className='sidebar h-100 align-items-center d-flex'>
           <Navbar color='faded' expand='xs' className="flex-column justify-content-between h-100">
-            <Link to={"/"}>
+            <Link to={"/packs"}>
               <p className="h2 sidebar__title mt-3">Cutie py</p>
             </Link>
             <NavbarToggler onClick={toggle} />
