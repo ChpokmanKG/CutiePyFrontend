@@ -26,7 +26,7 @@ const App: React.FC = () => {
               <Switch>
                 <Route exact path={"/"} component={LoginPage}/>
                 <Route exact path={"/register"} component={Register}/>
-                <Route exact path={['/','/packs']} component={MainTable}/>
+                <Route exact path={'/packs'} component={MainTable}/>
                 <Route exact path={'/packs/:id'} component={MainTable}/>
                 <Route exact path={'/problems/'} component={MainTable}/>
                 <Route exact path={'/problem/:id'} component={Problem}/>

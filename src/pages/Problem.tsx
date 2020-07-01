@@ -56,6 +56,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
     // @ts-ignore
     formData.append('datafile', event.target.files[0]);
     formData.append('problem', props.match.params.id);
+
     fetchWithAuth('main/files/upload/',{
       method: 'POST',
       body: formData
@@ -111,7 +112,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
               </div>
           ) : (<div className="w-100 d-flex justify-content-around align-items-center mt-3">
             <p className={"mb-0"}>Вы не авторизованы!</p>
-            <Link to={'/login'}>
+            <Link to={'/'}>
               <Button>
                 Войти
               </Button>

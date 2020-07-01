@@ -110,7 +110,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
     return (
         <div className="w-100 d-flex justify-content-around align-items-center mt-3">
           <p className={"mb-0"}>Вы не авторизованы!</p>
-          <Link to={'/login'}>
+          <Link to={'/'}>
             <Button>
               Войти
             </Button>
