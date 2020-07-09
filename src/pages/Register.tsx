@@ -20,7 +20,9 @@ interface NewUser {
   username: string,
   password: string,
   password2: string,
-  status: string
+  status: string,
+  first_name: string,
+  last_name: string
 }
 
 const Register: React.FC = () => {
@@ -30,7 +32,9 @@ const Register: React.FC = () => {
     email: '',
     password: '',
     password2: '',
-    status: 'Marathon'
+    status: 'Marathon',
+    first_name: '',
+    last_name: ''
   });
   const [redirect,setRedirect] = useState<boolean>(false);
 
@@ -51,7 +55,9 @@ const Register: React.FC = () => {
           email: userData.email,
           password: userData.password,
           password2: userData.password2,
-          status: userData.status === 'Marathon' ? "MP" : "NS"
+          status: userData.status === 'Marathon' ? "MP" : "NS",
+          first_name: userData.first_name,
+          last_name: userData.last_name
         })
       }).then(res => setRedirect(!redirect))
     }else {
@@ -87,6 +93,12 @@ const Register: React.FC = () => {
                   </FormGroup>
                   <FormGroup>
                     <Input type="text" required value={userData.username} placeholder="Username" onChange={(e) => inputChange(e, 'username')}/>
+                  </FormGroup>
+                  <FormGroup>
+                    <Input type="text" required value={userData.first_name} placeholder="First name" onChange={(e) => inputChange(e, 'first_name')}/>
+                  </FormGroup>
+                  <FormGroup>
+                    <Input type="text" required value={userData.last_name} placeholder="Last name" onChange={(e) => inputChange(e, 'last_name')}/>
                   </FormGroup>
                   <FormGroup>
                     <Input type="password" required value={userData.password} placeholder="Password" onChange={(e) => inputChange(e,'password')}/>
