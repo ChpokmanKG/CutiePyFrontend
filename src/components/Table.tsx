@@ -67,10 +67,11 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
         Context.setTitle("Pack " + table.name);
         return table.problems.map((item: Problem, idx: number) => {
           const date = new Date(item.created);
+          const id = solved.find(x => x.problem === item.id);
           return (
               <tr
                   key={idx}
-                  style={{background: (((solved && solved.length) ? solved[idx].is_solved : false) ? "#8FD5A6" : "#e3e3e3")}}>
+                  style={{background: (((solved && solved.length) ? (id && id.is_solved ? id.is_solved : false) : false) ? "#8FD5A6" : "#e3e3e3")}}>
                 <td>{idx + 1}</td>
                 <td><Link to={`/problem/${item.id}`}>{item.title}</Link></td>
                 <td>{item.complexity}</td>
@@ -83,10 +84,11 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
         Context.setTitle("Problems");
         return table.map((item: Problem, idx: number) => {
           const date = new Date(item.created);
+          const id = solved.find(x => x.problem === item.id);
           return (
               <tr
                   key={idx}
-                  style={{background: (((solved && solved.length) ? solved[idx].is_solved : false) ? "#8FD5A6" : "#e3e3e3")}}>
+                  style={{background: (((solved && solved.length) ? (id && id.is_solved ? id.is_solved : false) : false) ? "#8FD5A6" : "#e3e3e3")}}>
                 <td>{idx + 1}</td>
                 <td><Link to={`/problem/${item.id}`}>{item.title}</Link></td>
                 <td>{item.complexity}</td>
