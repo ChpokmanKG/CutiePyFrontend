@@ -62,7 +62,7 @@ const Register: React.FC = () => {
         })
       }).then(res => setRedirect(!redirect))
     }else {
-      alert("Пароли не совпадают!")
+      alert("Passwords are not the same!")
     }
   };
 

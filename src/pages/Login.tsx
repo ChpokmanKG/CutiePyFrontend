@@ -7,10 +7,12 @@ import {
   Card, CardText, CardBody,
   CardTitle
 } from 'reactstrap';
+import ReactHtmlParser from 'react-html-parser';
 import LoginRegisterHeader from '../components/LoginRegisterHeader';
 import {Redirect} from 'react-router-dom';
 import {getTokenData} from "../services/fetch";
 import Loading from "../components/Loading";
+import {url} from '../services/fetch';
 
 interface UserLogin {
   username: string,
@@ -27,6 +29,7 @@ const LoginPage: React.FC = () => {
   const [data,setData] = useState<UserLogin>(user);
   const [redirect,setRedirect] = useState<boolean>(false);
   const [loading,setLoading] = useState<boolean>(false);
+  const [blog,setBlog] = useState<any>([]);
 
   const formSubmit = (event: React.FormEvent):void => {
     event.preventDefault();
@@ -48,7 +51,11 @@ const LoginPage: React.FC = () => {
   }
 
   useEffect(() => {
-    localStorage.removeItem('cutie-py-token')
+    localStorage.removeItem('cutie-py-token');
+    fetch(url + "/main/blog/")
+        .then(res => res.json())
+        .then(json => setBlog(json))
+        .catch(e => console.error(e))
   },[]);
 
   return (
@@ -69,15 +76,26 @@ const LoginPage: React.FC = () => {
                 <p className="h4">Feed</p>
 
                 <div className="news-wrap">
-                  {[1,1,1,1].map((item,idx) => (
-                      <Card key={idx} className={"mb-3"}>
-                        <CardBody>
-                          <CardTitle className="font-weight-bold mb-2">Card title</CardTitle>
-                          <CardText className="text-muted mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                          <p className="m-0 text-right news-author">by dimashmello 06/10/2020</p>
-                        </CardBody>
-                      </Card>
-                  ))}
+                  {blog.length ? blog.map((item: any,idx: number) => {
+                    const date = new Date(item.date_created);
+                    return (
+                        <Card key={idx} className={"mb-3"}>
+                          <CardBody>
+                            <CardTitle className="font-weight-bold mb-2">{item.title}</CardTitle>
+                            {ReactHtmlParser(item.content)}
+                            {/*<CardText className="text-muted mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
+                            <p className="m-0 text-right news-author">
+                              by {item.created_by}
+                              {String(date.getDate()).length === 1 ? `0${date.getDate()}` : " " + date.getDate()}
+                              /
+                              {String(date.getMonth()).length === 1 ? `0${date.getMonth()}` : date.getMonth()}
+                              /
+                              {date.getFullYear()}
+                            </p>
+                          </CardBody>
+                        </Card>
+                    )
+                  }) : <div className="d-flex justify-content-center align-items-center"><Loading /></div>}
                 </div>
 
               </div>
