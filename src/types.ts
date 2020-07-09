@@ -32,4 +32,20 @@ export type EditorType = {
   onChange?: (newValue: string) => void
 }
 
+export type DecodeToken = {
+  exp: number,
+  jti: string,
+  token_type: string,
+  user_id: number
+}
 
+export type Tokens = {
+  access: string,
+  expires_in: string,
+  refresh: string
+}
+
+export type Solved = {
+  problem: number,
+  is_solved: boolean
+}

@@ -3,19 +3,8 @@ import {withRouter,RouteComponentProps} from 'react-router-dom';
 import {url} from '../services/fetch';
 import MainContext from "../services/MainContext";
 import userImage from '../assets/images/user.png';
-
-interface Tokens {
-  access: string,
-  expires_in: string,
-  refresh: string
-}
-
-interface DecodeToken {
-  exp: number,
-  jti: string,
-  token_type: string,
-  user_id: number
-}
+import {DecodeToken,Tokens} from "../types";
+import {parseJwt} from '../services/functions';
 
 interface User {
   email: string,
@@ -28,16 +17,6 @@ interface User {
   problems_passed: number,
   rank: number,
   status: any,
-}
-
-const parseJwt = (token: any): DecodeToken => {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-
-  return JSON.parse(jsonPayload);
 }
 
 const PageHeader: any = () => {

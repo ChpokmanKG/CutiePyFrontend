@@ -5,33 +5,47 @@ import {fetchWithAuth} from '../services/fetch';
 import {Pack,Problem,Submissions} from '../types';
 import Loading from "./Loading";
 import MainContext from "../services/MainContext";
+import {parseJwt} from "../services/functions";
+import {Tokens,DecodeToken,Solved} from '../types';
 
 const MainTable: any = (props: RouteComponentProps<any>) => {
 
   const [table,setTable] = useState<any>([]);
+  const [solved,setSolved] = useState<Solved[]>([]);
   const Context = useContext(MainContext);
+
+
+  const fetchData = (endpoint: string):void => {
+    fetchWithAuth(`${endpoint}`,{
+      headers: {
+        'Accept': 'application/json',
+      }
+    })
+        .then(res => res.json())
+        .then(res => setTable(res))
+        .catch(e => console.error(e))
+  }
 
   useEffect(() => {
     setTable([]);
     const path: Array<string> = window.location.pathname.split('/');
     if(path[1] !== 'leaderboard') {
-      fetchWithAuth(`main${props.location.pathname}`,{
-        headers: {
-          'Accept': 'application/json',
-        }
-      })
-          .then(res => res.json())
-          .then(res => setTable(res))
-          .catch(e => console.error(e))
+      fetchData("main"+props.location.pathname);
     }else {
-      fetchWithAuth(`api/jwtauth/user/`,{
+      fetchData('api/jwtauth/user/');
+    }
+    if(path[1] === 'problems' || (path[1] === 'packs' && path[2] !== undefined)) {
+      const user:Tokens = JSON.parse(localStorage.getItem("cutie-py-token") as string);
+      const token: DecodeToken = parseJwt(user.access);
+      console.log(token.user_id);
+      fetchWithAuth(`main/problems/solved_by/${token.user_id}`,{
         headers: {
           'Accept': 'application/json',
         }
       })
           .then(res => res.json())
-          .then(res => setTable(res))
-          .catch(e => console.error(e))
+          .then(json => setSolved(json))
+          .catch(e => console.error(e));
     }
 
   },[props.location.pathname]);
@@ -54,7 +68,9 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
         return table.problems.map((item: Problem, idx: number) => {
           const date = new Date(item.created);
           return (
-              <tr key={idx} style={{background: (item.is_solved ? "#8FD5A6" : "#e3e3e3")}}>
+              <tr
+                  key={idx}
+                  style={{background: (((solved && solved.length) ? solved[idx].is_solved : false) ? "#8FD5A6" : "#e3e3e3")}}>
                 <td>{idx + 1}</td>
                 <td><Link to={`/problem/${item.id}`}>{item.title}</Link></td>
                 <td>{item.complexity}</td>
@@ -68,7 +84,9 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
         return table.map((item: Problem, idx: number) => {
           const date = new Date(item.created);
           return (
-              <tr key={idx} style={{background: (item.is_solved ? "#8FD5A6" : "#e3e3e3")}}>
+              <tr
+                  key={idx}
+                  style={{background: (((solved && solved.length) ? solved[idx].is_solved : false) ? "#8FD5A6" : "#e3e3e3")}}>
                 <td>{idx + 1}</td>
                 <td><Link to={`/problem/${item.id}`}>{item.title}</Link></td>
                 <td>{item.complexity}</td>
