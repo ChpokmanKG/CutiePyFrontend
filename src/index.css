@@ -4,6 +4,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background:#efefef !important;
   font-family: 'Poppins', sans-serif !important;
+  /*background: url("./assets/images/login-background.png") center center / cover !important;*/
 }
 
 code {
@@ -95,4 +96,67 @@ code {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/*  New Design  */
+
+.bg-white-custom {
+  background: #FCEFF9 !important;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.w-60 {
+  width: 60%;
+}
+
+
+.login-wrap__form-wrap img{
+  top: 6px;
+  left: 14px;
+}
+
+.login-wrap__form-title {
+  font-size: 24px;
+  color: #785964;
+}
+
+.login-wrap__form-wrap input {
+  background: #F4F3EE !important;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.login-wrap__form-button {
+  background: #A7333F !important;
+}
+
+.login-wrap__blog-title {
+  text-decoration: underline;
+  font-size: 24px;
+  font-style: normal;
+}
+
+.login-wrap__card {
+  max-height: 187px;
+}
+
+.login-wrap__card-wrap {
+  background: #A7333F;
+}
+
+.login-wrap__card-title {
+  font-size: 24px;
+}
+.Passed {
+  color: green;
+}
+
+.Failed {
+  color: red;
+}
+
+.Time-limit-exceeded {
+  color: yellow;
 }

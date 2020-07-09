@@ -2,6 +2,7 @@ import React,{useEffect,useState,useContext} from 'react';
 import {withRouter,RouteComponentProps} from 'react-router-dom';
 import {url} from '../services/fetch';
 import MainContext from "../services/MainContext";
+import userImage from '../assets/images/user.png';
 
 interface Tokens {
   access: string,
@@ -18,7 +19,15 @@ interface DecodeToken {
 
 interface User {
   email: string,
-  username: string
+  username: string,
+  attempts: string,
+  first_name: string,
+  last_name: string,
+  points: string,
+  problems_failed: number,
+  problems_passed: number,
+  rank: number,
+  status: any,
 }
 
 const parseJwt = (token: any): DecodeToken => {
@@ -37,6 +46,14 @@ const PageHeader: any = () => {
   const [user,setUser] = useState<User>({
     email: '',
     username: '',
+    attempts: '',
+    first_name: '',
+    last_name: '',
+    points: '',
+    problems_failed: 0,
+    problems_passed: 0,
+    rank: 0,
+    status: '',
   });
 
   useEffect(() => {
@@ -47,10 +64,10 @@ const PageHeader: any = () => {
           .then(res => res.json())
           .then(json => setUser(json))
           .catch(e => console.error(e))
-    }else setUser({username: "anonymous",email: "anonymous@mail.ru"})
+    }else setUser({...user,username: "anonymous",email: "anonymous@mail.ru"})
 
     return function cleanUp() {
-      setUser({username: "anonymous",email: "anonymous@mail.ru"})
+      setUser({...user,username: "anonymous",email: "anonymous@mail.ru"})
     }
   },[]);
 
@@ -62,12 +79,13 @@ const PageHeader: any = () => {
         <div className="user d-flex align-items-center">
           <div className="mr-2">
             <img className="user__image rounded-circle"
-                 src="https://instagram.fhel4-1.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/s640x640/82159802_186252155862293_8101768247139752125_n.jpg?_nc_ht=instagram.fhel4-1.fna.fbcdn.net&_nc_cat=105&_nc_ohc=36aXjhAQu7oAX-swlZZ&oh=090fe9e7ee6b3563feb750b0e653737b&oe=5F1260D8"
-                 alt=""/>
+                 src={userImage}
+                 alt="user`s avatar"
+                 />
           </div>
           <div>
             <p className="mb-0 user__name">{user.username}</p>
-            <p className="mb-0 user__rank">{user.email}</p>
+            <p className="mb-0 user__rank">Rank: {user.rank}</p>
           </div>
         </div>
 

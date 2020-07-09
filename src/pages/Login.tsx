@@ -10,6 +10,7 @@ import {
 import LoginRegisterHeader from '../components/LoginRegisterHeader';
 import {Redirect} from 'react-router-dom';
 import {getTokenData} from "../services/fetch";
+import Loading from "../components/Loading";
 
 interface UserLogin {
   username: string,
@@ -25,9 +26,11 @@ const LoginPage: React.FC = () => {
 
   const [data,setData] = useState<UserLogin>(user);
   const [redirect,setRedirect] = useState<boolean>(false);
+  const [loading,setLoading] = useState<boolean>(false);
 
   const formSubmit = (event: React.FormEvent):void => {
     event.preventDefault();
+    setLoading(true);
     getTokenData(data.username, data.password)
         .then(json => {
           console.log(json)
@@ -35,6 +38,7 @@ const LoginPage: React.FC = () => {
         })
         .catch(() => {
           setData(user);
+          setLoading(false);
           alert("Данные введены не верно");
         })
   };
@@ -50,6 +54,12 @@ const LoginPage: React.FC = () => {
   return (
     redirect ? (<Redirect to={'/packs'} />) : (
         <Container>
+          {loading &&
+          <div
+            className='w-100 h-100 position-fixed bg-white d-flex justify-content-center align-items-center'
+            style={{top: 0,left: 0,zIndex: 1000}}>
+            <Loading />
+          </div>}
           <LoginRegisterHeader />
           <Row style={{height: "calc(100vh - 56px)"}}>
 
@@ -89,8 +99,10 @@ const LoginPage: React.FC = () => {
                   log in
                 </Button>
               </Form>
-
             </Col>
+          </Row>
+          <Row>
+
           </Row>
         </Container>
     )

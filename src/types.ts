@@ -4,6 +4,8 @@ export type Problem = {
   title: string,
   content: string,
   created: string,
+  complexity: string,
+  is_solved: boolean
 }
 
 export type Pack = {

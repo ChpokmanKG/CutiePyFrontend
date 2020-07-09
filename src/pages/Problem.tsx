@@ -24,6 +24,8 @@ const Problem: any = (props:RouteComponentProps<any>) => {
   const Context = useContext(MainContext);
   const [code, setCode] = useState<string>('');
   const [redirect,setRedirect] = useState<boolean>(false);
+  const [err,setError] = useState<boolean>(false);
+  const [loading,setLoading] = useState<boolean>(false);
   const [problem,setProblem] = useState<ProblemInterface>({
     content: '',
     created: '',
@@ -38,7 +40,12 @@ const Problem: any = (props:RouteComponentProps<any>) => {
 
   useEffect(() => {
     fetchWithAuth(`main/problems/${props.match.params.id}`,{headers: {'Accept': 'application/json'}})
-        .then(res => res.json())
+        .then(res => {
+          if(res.status === 403) {
+            setError(true);
+          }
+          return res.json()
+        })
         .then(json => {
           Context.setTitle('Problem ' + json.title);
           setProblem(json)
@@ -52,6 +59,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
+    setLoading(true);
     const formData = new FormData();
     // @ts-ignore
     formData.append('datafile', event.target.files[0]);
@@ -66,6 +74,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
   }
 
   const sendContent = ():void => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("problem", props.match.params.id);
     formData.append('content',code);
@@ -78,6 +87,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
   }
 
   if(redirect) return <Redirect to={'/files'} />
+  if(err) return <p className="h2 text-center">You don't have permission</p>
 
   return (
       <Row className="problem">
@@ -98,7 +108,12 @@ const Problem: any = (props:RouteComponentProps<any>) => {
           }
 
         </Col>
-        <Col md={6}>
+        <Col md={6} className="position-relative">
+          {loading && <div
+            className="position-absolute w-100 h-100 bg-white d-flex justify-content-center align-items-center"
+            style={{top: 0,zIndex: 1000}}>
+            <Loading />
+          </div>}
           <p>Type your solution</p>
           <Editor code={code} onChange={onChange}/>
           {localStorage.getItem("cutie-py-token") ? (

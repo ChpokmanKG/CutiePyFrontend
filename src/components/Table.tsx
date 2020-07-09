@@ -13,14 +13,26 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
 
   useEffect(() => {
     setTable([]);
-    fetchWithAuth(`main${props.location.pathname}`,{
-      headers: {
-        'Accept': 'application/json',
-      }
-    })
-        .then(res => res.json())
-        .then(res => setTable(res))
-        .catch(e => console.error(e))
+    const path: Array<string> = window.location.pathname.split('/');
+    if(path[1] !== 'leaderboard') {
+      fetchWithAuth(`main${props.location.pathname}`,{
+        headers: {
+          'Accept': 'application/json',
+        }
+      })
+          .then(res => res.json())
+          .then(res => setTable(res))
+          .catch(e => console.error(e))
+    }else {
+      fetchWithAuth(`api/jwtauth/user/`,{
+        headers: {
+          'Accept': 'application/json',
+        }
+      })
+          .then(res => res.json())
+          .then(res => setTable(res))
+          .catch(e => console.error(e))
+    }
 
   },[props.location.pathname]);
 
@@ -42,10 +54,10 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
         return table.problems.map((item: Problem, idx: number) => {
           const date = new Date(item.created);
           return (
-              <tr key={idx}>
+              <tr key={idx} style={{background: (item.is_solved ? "#8FD5A6" : "#e3e3e3")}}>
                 <td>{idx + 1}</td>
                 <td><Link to={`/problem/${item.id}`}>{item.title}</Link></td>
-                <td>1</td>
+                <td>{item.complexity}</td>
                 <td>{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</td>
               </tr>
           )
@@ -56,10 +68,10 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
         return table.map((item: Problem, idx: number) => {
           const date = new Date(item.created);
           return (
-              <tr key={idx}>
+              <tr key={idx} style={{background: (item.is_solved ? "#8FD5A6" : "#e3e3e3")}}>
                 <td>{idx + 1}</td>
                 <td><Link to={`/problem/${item.id}`}>{item.title}</Link></td>
-                <td>1</td>
+                <td>{item.complexity}</td>
                 <td>{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</td>
               </tr>
           )
@@ -81,6 +93,16 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
           )
         })
       }
+      else if(path[1] === 'leaderboard' && (table && table.length)) {
+        Context.setTitle('Leaderboard');
+        return table.map((item: any,idx: number) => (
+            <tr key={idx}>
+              <td>{idx + 1}</td>
+              <td>{item.user}</td>
+              <td>{item.points}</td>
+            </tr>
+        ))
+      }
   };
   const showTableHead = () => {
     if(props.location.pathname.split('/')[1] === 'files' && props.location.pathname.split('/')[2] === undefined) {
@@ -93,7 +115,16 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
             <th>Date</th>
           </tr>
       )
-    }else {
+    }else if(props.location.pathname.split('/')[1] === 'leaderboard') {
+      return (
+          <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Points</th>
+          </tr>
+      )
+    }
+    else {
       return (
           <tr>
             <th>#</th>
@@ -109,10 +140,12 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
     Context.setTitle("Submissions")
     return (
         <div className="w-100 d-flex justify-content-around align-items-center mt-3">
-          <p className={"mb-0"}>Вы не авторизованы!</p>
+          <p className={"mb-0"}>
+            You are not authorized or you don't have permission
+          </p>
           <Link to={'/'}>
             <Button>
-              Войти
+              Sign in
             </Button>
           </Link>
         </div>

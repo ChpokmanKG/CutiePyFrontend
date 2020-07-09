@@ -1,4 +1,4 @@
-export const url = "https://cors-anywhere.herokuapp.com/http://46.101.192.225:8008";
+export const url = "http://46.101.192.225:8008";
 
 const saveToken = (token: string):void => {
   localStorage.setItem('cutie-py-token',token);
