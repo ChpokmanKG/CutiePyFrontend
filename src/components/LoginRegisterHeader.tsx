@@ -11,20 +11,13 @@ const LoginRegisterHeader: React.FC = () => {
   return (
       <Navbar color="faded" light expand="md">
         <NavbarBrand tag="span">
-          <Link to="/login">
+          <Link to="/">
             Cutie Py
           </Link>
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink tag="span">
-                <Link to="/problems">
-                  Problems
-                </Link>
-              </NavLink>
-            </NavItem>
             <NavItem>
               <NavLink tag="span">
                 <Link to="/register">

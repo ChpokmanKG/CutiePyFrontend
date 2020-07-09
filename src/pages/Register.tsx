@@ -14,6 +14,7 @@ import {
 import LoginRegisterHeader from '../components/LoginRegisterHeader';
 import {url} from '../services/fetch';
 import {Redirect} from "react-router";
+import {Link} from 'react-router-dom';
 
 interface NewUser {
   email: string,
@@ -110,7 +111,8 @@ const Register: React.FC = () => {
                     submit
                   </Button>
                   <div className={"text-center mt-3"}>
-                    Have an account? Log in
+                    Have an account?
+                    <Link to={"/"}>Log in</Link>
                   </div>
                 </Form>
               </Col>
