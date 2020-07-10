@@ -4,7 +4,7 @@ import {
   Row,
   Col,
   Form, FormGroup, Input, Button,
-  Card, CardText, CardBody,
+  Card, CardBody,
   CardTitle
 } from 'reactstrap';
 import ReactHtmlParser from 'react-html-parser';
@@ -83,7 +83,6 @@ const LoginPage: React.FC = () => {
                           <CardBody>
                             <CardTitle className="font-weight-bold mb-2">{item.title}</CardTitle>
                             {ReactHtmlParser(item.content)}
-                            {/*<CardText className="text-muted mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>*/}
                             <p className="m-0 text-right news-author">
                               by {item.created_by}
                               {String(date.getDate()).length === 1 ? `0${date.getDate()}` : " " + date.getDate()}

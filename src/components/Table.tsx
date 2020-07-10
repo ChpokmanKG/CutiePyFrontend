@@ -29,11 +29,8 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
   useEffect(() => {
     setTable([]);
     const path: Array<string> = window.location.pathname.split('/');
-    if(path[1] !== 'leaderboard') {
-      fetchData("main"+props.location.pathname);
-    }else {
-      fetchData('api/jwtauth/user/');
-    }
+    fetchData("main"+props.location.pathname);
+
     if(path[1] === 'problems' || (path[1] === 'packs' && path[2] !== undefined)) {
       const user:Tokens = JSON.parse(localStorage.getItem("cutie-py-token") as string);
       const token: DecodeToken = parseJwt(user.access);
@@ -113,16 +110,6 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
           )
         })
       }
-      else if(path[1] === 'leaderboard' && (table && table.length)) {
-        Context.setTitle('Leaderboard');
-        return table.map((item: any,idx: number) => (
-            <tr key={idx}>
-              <td>{idx + 1}</td>
-              <td>{item.user}</td>
-              <td>{item.points}</td>
-            </tr>
-        ))
-      }
   };
   const showTableHead = () => {
     if(props.location.pathname.split('/')[1] === 'files' && props.location.pathname.split('/')[2] === undefined) {
@@ -135,16 +122,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
             <th>Date</th>
           </tr>
       )
-    }else if(props.location.pathname.split('/')[1] === 'leaderboard') {
-      return (
-          <tr>
-            <th>#</th>
-            <th>User</th>
-            <th>Points</th>
-          </tr>
-      )
-    }
-    else {
+    } else {
       return (
           <tr>
             <th>#</th>
