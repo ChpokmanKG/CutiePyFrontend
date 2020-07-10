@@ -82,7 +82,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
       method: 'POST',
       body: formData
     }).then(res => res.json())
-        .then(json => setRedirect(!redirect))
+        .then(() => setRedirect(!redirect))
         .catch(e => console.error(e))
   }
 
