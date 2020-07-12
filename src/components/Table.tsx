@@ -85,7 +85,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
         return (
             <tr
                 key={idx}
-                style={{background: (((solved && solved.length) ? (id && id.is_solved ? id.is_solved : false) : false) ? "#8FD5A6" : "#e3e3e3")}}>
+                style={{background: (((solved && solved.length) ? (id && id.is_solved ? id.is_solved : false) : false) ? "#8FD5A6" : idx % 2 === 0 ? "#e3e3e3" : "#efefef")}}>
               <td>{idx + 1}</td>
               <td><Link to={`/problem/${item.id}`}>{item.title}</Link></td>
               <td>{item.complexity}</td>

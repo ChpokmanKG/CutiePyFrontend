@@ -5,6 +5,8 @@ import Loading from "./Loading";
 import MainContext from "../services/MainContext";
 import {Link, RouteComponentProps} from "react-router-dom";
 import {Problem} from "../types";
+import {parseJwt} from "../services/functions";
+import {Tokens,DecodeToken,Solved} from '../types';
 
 
 
@@ -12,8 +14,9 @@ const PackTable = (props: RouteComponentProps<any>) => {
 
   const [table,setTable] = useState<any>([]);
   const [sort,setSort] = useState<string>('Choose sort method');
-  const Context = useContext(MainContext);
+  const [solved,setSolved] = useState<Solved[]>([]);
 
+  const Context = useContext(MainContext);
 
   useEffect(() => {
     Context.setTitle("Pack");
@@ -25,6 +28,16 @@ const PackTable = (props: RouteComponentProps<any>) => {
         .then(json => {
           Context.setTitle("Pack " + json.name);
           setTable(json)
+          const user: Tokens = JSON.parse(localStorage.getItem("cutie-py-token") as string);
+          const token: DecodeToken = parseJwt(user.access);
+          fetchWithAuth(`main/problems/solved_by/${token.user_id}`,{
+            headers: {
+              'Accept': 'application/json',
+            }
+          })
+              .then(res => res.json())
+              .then(json => setSolved(json))
+              .catch(e => console.error(e));
         })
         .catch(e => console.error(e))
   },[]);
@@ -72,8 +85,12 @@ const PackTable = (props: RouteComponentProps<any>) => {
               <tbody>
               {table.problems.map((item: Problem,idx: number) => {
                 const date = new Date(item.created);
+                const id = solved.find(x => x.problem === item.id);
                 return (
-                    <tr key={idx}>
+                    <tr
+                        key={idx}
+                        style={{background: (((solved && solved.length) ? (id && id.is_solved ? id.is_solved : false) : false) ? "#8FD5A6" : idx % 2 === 0 ? "#e3e3e3" : "#efefef")}}
+                      >
                       <td>{idx + 1}</td>
                       <td><Link to={`/problem/${item.id}`}>{item.title}</Link></td>
                       <td>{item.complexity}</td>
