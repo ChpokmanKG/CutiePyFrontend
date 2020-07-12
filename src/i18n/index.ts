@@ -2,6 +2,7 @@ import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import en from './locales/en.json';
+import ru from './locales/ru.json';
 
 const options = {
 
@@ -9,6 +10,9 @@ const options = {
     en: {
       common: en
     },
+    ru: {
+      common: ru
+    }
   },
 
   fallbackLng: "en",

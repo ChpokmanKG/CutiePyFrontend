@@ -7,6 +7,7 @@ import {Link, RouteComponentProps} from "react-router-dom";
 import {Problem} from "../types";
 import {parseJwt} from "../services/functions";
 import {Tokens,DecodeToken,Solved} from '../types';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -17,16 +18,17 @@ const PackTable = (props: RouteComponentProps<any>) => {
   const [solved,setSolved] = useState<Solved[]>([]);
 
   const Context = useContext(MainContext);
+  const {t} = useTranslation();
 
   useEffect(() => {
-    Context.setTitle("Pack");
+    Context.setTitle(t('sideBar.pack'));
     fetchWithAuth(`main/packs/${props.match.params.id}`,{
       headers: {
         'Accept': 'application/json',
       }
     }).then(res => res.json())
         .then(json => {
-          Context.setTitle("Pack " + json.name);
+          Context.setTitle(t('sideBar.pack') + " " + json.name);
           setTable(json)
           const user: Tokens = JSON.parse(localStorage.getItem("cutie-py-token") as string);
           const token: DecodeToken = parseJwt(user.access);

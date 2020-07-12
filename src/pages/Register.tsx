@@ -15,6 +15,7 @@ import LoginRegisterHeader from '../components/LoginRegisterHeader';
 import {url} from '../services/fetch';
 import {Redirect} from "react-router";
 import {Link} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface NewUser {
   email: string,
@@ -38,6 +39,7 @@ const Register: React.FC = () => {
     last_name: ''
   });
   const [redirect,setRedirect] = useState<boolean>(false);
+  const {t} = useTranslation();
 
   const inputChange = (event: React.ChangeEvent<HTMLInputElement>, fieldName: string):void => {
     setUserData({...userData, [fieldName]: event.target.value});
@@ -76,9 +78,9 @@ const Register: React.FC = () => {
               <Col md={5}>
                 <Form className="bg-white mx-auto w-75 p-3 shadow rounded form" onSubmit={formSubmit}>
                   <p className={"text-center mb-2 form__title"}>Cutie py</p>
-                  <p className={"text-center "}>Sign up form</p>
+                  <p className={"text-center "}>{t('register.sign_up_form')}</p>
                   <FormGroup>
-                    <Input type="email" required value={userData.email} placeholder="email" onChange={(e) => inputChange(e,'email')}/>
+                    <Input type="email" required value={userData.email} placeholder={t('register.email')} onChange={(e) => inputChange(e,'email')}/>
                   </FormGroup>
                   <FormGroup>
                     <UncontrolledDropdown>
@@ -93,26 +95,26 @@ const Register: React.FC = () => {
                     </UncontrolledDropdown>
                   </FormGroup>
                   <FormGroup>
-                    <Input type="text" required value={userData.username} placeholder="Username" onChange={(e) => inputChange(e, 'username')}/>
+                    <Input type="text" required value={userData.username} placeholder={t('common.username')} onChange={(e) => inputChange(e, 'username')}/>
                   </FormGroup>
                   <FormGroup>
-                    <Input type="text" required value={userData.first_name} placeholder="First name" onChange={(e) => inputChange(e, 'first_name')}/>
+                    <Input type="text" required value={userData.first_name} placeholder={t('register.firstName')} onChange={(e) => inputChange(e, 'first_name')}/>
                   </FormGroup>
                   <FormGroup>
-                    <Input type="text" required value={userData.last_name} placeholder="Last name" onChange={(e) => inputChange(e, 'last_name')}/>
+                    <Input type="text" required value={userData.last_name} placeholder={t('register.lastName')} onChange={(e) => inputChange(e, 'last_name')}/>
                   </FormGroup>
                   <FormGroup>
-                    <Input type="password" required value={userData.password} placeholder="Password" onChange={(e) => inputChange(e,'password')}/>
+                    <Input type="password" required value={userData.password} placeholder={t('common.password')} onChange={(e) => inputChange(e,'password')}/>
                   </FormGroup>
                   <FormGroup>
-                    <Input type="password" required value={userData.password2} placeholder="Confirm password" onChange={(e) => inputChange(e,'password2')}/>
+                    <Input type="password" required value={userData.password2} placeholder={t('register.confirmPassword')} onChange={(e) => inputChange(e,'password2')}/>
                   </FormGroup>
                   <Button block className="text-uppercase">
-                    submit
+                    {t('register.submit')}
                   </Button>
                   <div className={"text-center mt-3"}>
-                    Have an account?
-                    <Link to={"/"}>Log in</Link>
+                    {t('register.question')}
+                    <Link to={"/"}> {t('common.login')}</Link>
                   </div>
                 </Form>
               </Col>

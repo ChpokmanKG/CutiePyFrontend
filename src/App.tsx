@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
+import i18next from "i18next";
 import Sidebar from './components/SideBar';
 import PageHeaderWrap from './components/PageHeader';
 import MainTable from './components/Table';
@@ -13,6 +14,16 @@ import LeaderBoardTable from "./components/LeaderBoardTable";
 import PackTable from './components/PackTable';
 
 const App: React.FC = () => {
+
+  const [lang,setLang] = useState<boolean>(true);
+
+  const changeLang = () => {
+    setLang(act => !act);
+  }
+
+  useEffect(() => {
+    i18next.changeLanguage(lang ? "en" : "ru");
+  },[lang])
 
   return (
     <BrowserRouter>
@@ -37,6 +48,9 @@ const App: React.FC = () => {
             </Container>
           </Col>
         </Row>
+        {/*<div onClick={changeLang} className={"position-fixed d-flex justify-content-center align-items-center to-top-button rounded-circle shadow"}>*/}
+        {/*  {lang ? "en" : "ru"}*/}
+        {/*</div>*/}
       </Container>
       </ContextWrapper>
     </BrowserRouter>

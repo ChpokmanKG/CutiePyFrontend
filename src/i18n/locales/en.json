@@ -9,5 +9,23 @@
     "register": "Register",
     "newsTitle": "Feed",
     "sign_form": "Sign in form"
+  },
+  "register": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "confirmPassword": "Confirm password",
+    "email": "Email",
+    "submit": "Submit",
+    "question": "Have an account?",
+    "sign_up_form": "Sign up"
+  },
+  "sideBar": {
+    "packs": "Packs",
+    "problems": "Problems",
+    "submissions": "Submissions",
+    "leaderboard": "Leaderboard",
+    "logout": "Logout",
+    "pack": "Pack",
+    "submission": "Submission"
   }
 }

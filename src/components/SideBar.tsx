@@ -6,12 +6,15 @@ import Submissions from '../assets/icons/plane.svg';
 import Leaders from '../assets/icons/leaders.svg';
 import Logout from '../assets/icons/logout.svg';
 import {Link,withRouter,RouteComponentProps} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 
 const Sidebar: any = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const {t} = useTranslation();
   const toggle = ():void => setIsOpen(!isOpen);
+
   return (
       <Col md={2} xs={4} sm={4} className="pl-0">
         <section className='sidebar h-100 align-items-center d-flex' style={{maxHeight: window.innerHeight,position: 'sticky',top: 0}}>
@@ -25,25 +28,25 @@ const Sidebar: any = () => {
                 <NavItem>
                   <Link to="/packs" className="mb-3 text-light d-inline-block">
                     <img className="sidebar__image" src={Packs} alt="packs" />
-                    <span className="ml-2">Packs</span>
+                    <span className="ml-2">{t('sideBar.packs')}</span>
                   </Link>
                 </NavItem>
                 <NavItem>
                   <Link to="/problems" className="mb-3 text-light d-inline-block">
                     <img className="sidebar__image" src={Problems} alt="Problems" />
-                    <span className="ml-2">Problems</span>
+                    <span className="ml-2">{t('sideBar.problems')}</span>
                   </Link>
                 </NavItem>
                 <NavItem>
                   <Link to="/files" className="mb-3 text-light d-inline-block">
                     <img className="sidebar__image" src={Submissions} alt="Submissions" />
-                    <span className="ml-2">Submissions</span>
+                    <span className="ml-2">{t('sideBar.submissions')}</span>
                   </Link>
                 </NavItem>
                 <NavItem>
                   <Link to="/leaderboard" className="mb-3 text-light d-inline-block">
                     <img className="sidebar__image" src={Leaders} alt="Submissions" />
-                    <span className="ml-2">Leaderboard</span>
+                    <span className="ml-2">{t('sideBar.leaderboard')}</span>
                   </Link>
                 </NavItem>
               </Nav>
@@ -52,7 +55,7 @@ const Sidebar: any = () => {
               <NavLink tag={"span"}>
                 <Link to={'/'}>
                   <img className="sidebar__image" src={Logout} alt="Logout" />
-                  <span className="ml-2 text-light">Logout</span>
+                  <span className="ml-2 text-light">{t('sideBar.logout')}</span>
                 </Link>
               </NavLink>
             </NavItem>

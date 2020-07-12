@@ -1,11 +1,13 @@
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
 import {Link} from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import React, {useState} from "react";
 
 
 const LoginRegisterHeader: React.FC = () => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const {t} = useTranslation();
   const toggle = () => setIsOpen(!isOpen);
 
   return (
@@ -21,7 +23,7 @@ const LoginRegisterHeader: React.FC = () => {
             <NavItem>
               <NavLink tag="span">
                 <Link to="/register">
-                  Register
+                  {t('loginPage.register')}
                 </Link>
               </NavLink>
             </NavItem>

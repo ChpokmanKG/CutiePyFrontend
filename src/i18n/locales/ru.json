@@ -1,0 +1,31 @@
+{
+  "common": {
+    "cutie": "Cutie py",
+    "username": "Никнейм",
+    "password": "Пароль",
+    "login": "Войти"
+  },
+  "loginPage": {
+    "register": "Регистрация",
+    "newsTitle": "Новости",
+    "sign_form": "Форма авторизации"
+  },
+  "register": {
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "confirmPassword": "Подтвердите пароль",
+    "email": "Электронная почта",
+    "submit": "Отправить",
+    "question": "У вас уже есть аккаунт?",
+    "sign_up_form": "Форма регистрации"
+  },
+  "sideBar": {
+    "packs": "Паки",
+    "problems": "Задачи",
+    "submissions": "Решения",
+    "leaderboard": "Доска лидеров",
+    "logout": "Выйти",
+    "pack": "Пак",
+    "submission": "Решение"
+  }
+}

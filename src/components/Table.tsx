@@ -7,12 +7,15 @@ import Loading from "./Loading";
 import MainContext from "../services/MainContext";
 import {parseJwt} from "../services/functions";
 import {Tokens,DecodeToken,Solved} from '../types';
+import { useTranslation } from 'react-i18next';
+
 
 const MainTable: any = (props: RouteComponentProps<any>) => {
 
   const [table,setTable] = useState<any>([]);
   const [solved,setSolved] = useState<Solved[]>([]);
   const Context = useContext(MainContext);
+  const {t} = useTranslation();
 
 
   const fetchData = (endpoint: string):void => {
@@ -31,7 +34,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
     const path: Array<string> = window.location.pathname.split('/');
     fetchData("main"+props.location.pathname);
 
-    if(path[1] === 'problems' || (path[1] === 'packs' && path[2] !== undefined)) {
+    if(path[1] === 'problems') {
       const user:Tokens = JSON.parse(localStorage.getItem("cutie-py-token") as string);
       const token: DecodeToken = parseJwt(user.access);
       console.log(token.user_id);
@@ -49,7 +52,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
 
   const showTable = () => {
     const path = window.location.pathname.split('/');
-    Context.setTitle("Packs")
+    Context.setTitle(t('sideBar.packs'))
     if(((path[1] === 'packs' || path[1] === '') && path[2] === undefined) && table.length) {
       return table.map((item: Pack,idx:number) => (
           <tr key={idx}>
@@ -61,7 +64,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
       ))
     }
     else if((path[1] === 'packs' && path[2] !== undefined) && table.problems) {
-      Context.setTitle("Pack " + table.name);
+      Context.setTitle(t('sideBar.pack') + " " + table.name);
       return table.problems.map((item: Problem, idx: number) => {
         const date = new Date(item.created);
         const id = solved.find(x => x.problem === item.id);
@@ -78,7 +81,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
       })
     }
     else if((path[1] === 'problems' && table) && table.length) {
-      Context.setTitle("Problems");
+      Context.setTitle(t('sideBar.problems'));
       return table.map((item: Problem, idx: number) => {
         const date = new Date(item.created);
         const id = solved.find(x => x.problem === item.id);
@@ -95,7 +98,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
       })
     }
     else if(path[1] === 'files' && path[2] === undefined) {
-      Context.setTitle("Submissions");
+      Context.setTitle(t('sideBar.submissions'));
       let count:number = table.length;
       return table.map((item: Submissions) => {
         const date = new Date(item.created);
@@ -104,7 +107,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
               <td>{count--}</td>
               <td><Link to={`/files/${item.number}`}>{item.number}</Link></td>
               <td><Link to={`/problem/${item.problem}`}>{item.problem_title}</Link></td>
-              <td>{item.status}</td>
+              <td className={item.status}>{item.status}</td>
               <td>{date.getDate()}.{date.getMonth()}.{date.getFullYear()}</td>
             </tr>
         )

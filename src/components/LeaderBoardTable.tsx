@@ -3,7 +3,7 @@ import { Table,UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem}
 import {fetchWithAuth} from "../services/fetch";
 import Loading from "./Loading";
 import MainContext from "../services/MainContext";
-
+import { useTranslation } from 'react-i18next';
 
 
 const LeaderBoardTable: React.FC = () => {
@@ -12,6 +12,7 @@ const LeaderBoardTable: React.FC = () => {
   const [userType,setUserType] = useState({type: 'All',code: 'All'});
   const [loading,setLoading] = useState(false);
   const Context = useContext(MainContext);
+  const {t} = useTranslation();
 
   const fetchData = (end: string) => {
     setLoading(false);
@@ -29,7 +30,7 @@ const LeaderBoardTable: React.FC = () => {
   }
 
   useEffect(() => {
-    Context.setTitle("Leaderboard")
+    Context.setTitle(t('sideBar.leaderboard'))
     fetchData('api/jwtauth/user/');
   },[]);
 
