@@ -45,16 +45,14 @@ const PackTable = (props: RouteComponentProps<any>) => {
   const sortBy = (item: string) => {
     setSort(item);
     let sortedArray;
-    if(item === 'complexity') {
+    if(item === 'hard') {
       sortedArray = table.problems.sort((a:Problem,b:Problem) => {
         return +b.complexity - +a.complexity;
       })
-      console.log('complexity',sortedArray);
     }else {
       sortedArray = table.problems.sort((a:Problem,b:Problem) => {
         return +a.complexity - +b.complexity;
       })
-      console.log('lightness',sortedArray);
     }
     setTable({...table,problems: sortedArray});
   }
@@ -67,7 +65,7 @@ const PackTable = (props: RouteComponentProps<any>) => {
             {sort}
           </DropdownToggle>
           <DropdownMenu>
-            {['complexity','lightness'].map((item: any,idx: number) => (
+            {['hard','easy'].map((item: any,idx: number) => (
                 <DropdownItem className="text-capitalize" key={idx} onClick={() => sortBy(item)}>{item}</DropdownItem>
             ))}
           </DropdownMenu>
