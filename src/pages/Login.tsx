@@ -10,6 +10,7 @@ import {
 import ReactHtmlParser from 'react-html-parser';
 import LoginRegisterHeader from '../components/LoginRegisterHeader';
 import {Redirect} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {getTokenData} from "../services/fetch";
 import Loading from "../components/Loading";
 import {url} from '../services/fetch';
@@ -30,6 +31,7 @@ const LoginPage: React.FC = () => {
   const [redirect,setRedirect] = useState<boolean>(false);
   const [loading,setLoading] = useState<boolean>(false);
   const [blog,setBlog] = useState<any>([]);
+  const {t} = useTranslation();
 
   const formSubmit = (event: React.FormEvent):void => {
     event.preventDefault();
@@ -73,7 +75,9 @@ const LoginPage: React.FC = () => {
             <Col md={6} className="d-flex align-items-center justify-content-center">
 
               <div className="w-75">
-                <p className="h4">Feed</p>
+                <p className="h4">
+                  {t('loginPage.newsTitle')}
+                </p>
 
                 <div className="news-wrap">
                   {blog.length ? blog.map((item: any,idx: number) => {
@@ -104,16 +108,16 @@ const LoginPage: React.FC = () => {
             <Col md={6} className="d-flex align-items-center justify-content-center">
 
               <Form className="bg-white w-75 p-3 shadow rounded" onSubmit={formSubmit}>
-                <p className={"text-center mb-2 form__title"}>Cutie py</p>
-                <p className={"text-center "}>Sign in form</p>
+                <p className={"text-center mb-2 form__title"}>{t('common.cutie')}</p>
+                <p className={"text-center "}>{t('loginPage.sign_form')}</p>
                 <FormGroup>
-                  <Input type="text" value={data.username} onChange={(e) => inputChange(e,"username")} placeholder="Username" required/>
+                  <Input type="text" value={data.username} onChange={(e) => inputChange(e,"username")} placeholder={t('common.username')} required/>
                 </FormGroup>
                 <FormGroup>
-                  <Input type="password" value={data.password} onChange={(e) => inputChange(e,"password")} placeholder="Password" required/>
+                  <Input type="password" value={data.password} onChange={(e) => inputChange(e,"password")} placeholder={t('common.password')} required/>
                 </FormGroup>
                 <Button block className="text-uppercase">
-                  log in
+                  {t('common.login')}
                 </Button>
               </Form>
             </Col>

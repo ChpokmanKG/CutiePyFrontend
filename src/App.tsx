@@ -10,8 +10,7 @@ import Register from "./pages/Register";
 import Solution from './pages/Solution';
 import ContextWrapper from "./components/ContextWrapper";
 import LeaderBoardTable from "./components/LeaderBoardTable";
-
-
+import PackTable from './components/PackTable';
 
 const App: React.FC = () => {
 
@@ -28,7 +27,7 @@ const App: React.FC = () => {
                 <Route exact path={"/"} component={LoginPage}/>
                 <Route exact path={"/register"} component={Register}/>
                 <Route exact path={'/packs'} component={MainTable}/>
-                <Route exact path={'/packs/:id'} component={MainTable}/>
+                <Route exact path={'/packs/:id'} component={PackTable}/>
                 <Route exact path={'/problems/'} component={MainTable}/>
                 <Route exact path={'/problem/:id'} component={Problem}/>
                 <Route exact path={'/files/'} component={MainTable}/>

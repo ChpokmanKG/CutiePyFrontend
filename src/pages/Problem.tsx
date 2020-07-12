@@ -114,6 +114,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
             style={{top: 0,zIndex: 1000}}>
             <Loading />
           </div>}
+          <div className="position-sticky" style={{top: '20px'}}>
           <p>Type your solution</p>
           <Editor code={code} onChange={onChange}/>
           {localStorage.getItem("cutie-py-token") ? (
@@ -126,13 +127,14 @@ const Problem: any = (props:RouteComponentProps<any>) => {
                 </Button>
               </div>
           ) : (<div className="w-100 d-flex justify-content-around align-items-center mt-3">
-            <p className={"mb-0"}>Вы не авторизованы!</p>
+            <p className={"mb-0"}>You are not authorized!</p>
             <Link to={'/'}>
               <Button>
-                Войти
+                Sign in
               </Button>
             </Link>
           </div>)}
+          </div>
         </Col>
       </Row>
   )

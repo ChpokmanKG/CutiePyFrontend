@@ -1,0 +1,13 @@
+{
+  "common": {
+    "cutie": "Cutie py",
+    "username": "Username",
+    "password": "Password",
+    "login": "Log in"
+  },
+  "loginPage": {
+    "register": "Register",
+    "newsTitle": "Feed",
+    "sign_form": "Sign in form"
+  }
+}
