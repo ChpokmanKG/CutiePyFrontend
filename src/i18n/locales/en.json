@@ -27,5 +27,23 @@
     "logout": "Logout",
     "pack": "Pack",
     "submission": "Submission"
+  },
+  "table": {
+    "complexity": "Complexity",
+    "date-created": "Date created",
+    "submission": "Submission",
+    "problem": "Problem",
+    "status": "Status",
+    "sort": "Sort by",
+    "sort-method": "Choose sort method",
+    "hard": "Hard",
+    "easy": "easy"
+  },
+  "problem": {
+    "description": "Description",
+    "type": "Type your solution",
+    "submit": "Submit",
+    "or": "or",
+    "choose-file": "Choose a file"
   }
 }

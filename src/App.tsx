@@ -48,9 +48,9 @@ const App: React.FC = () => {
             </Container>
           </Col>
         </Row>
-        {/*<div onClick={changeLang} className={"position-fixed d-flex justify-content-center align-items-center to-top-button rounded-circle shadow"}>*/}
-        {/*  {lang ? "en" : "ru"}*/}
-        {/*</div>*/}
+        <div onClick={changeLang} className={"position-fixed d-flex justify-content-center align-items-center to-top-button rounded-circle shadow"}>
+          {lang ? "en" : "ru"}
+        </div>
       </Container>
       </ContextWrapper>
     </BrowserRouter>

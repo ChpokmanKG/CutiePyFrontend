@@ -119,19 +119,19 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
       return (
           <tr>
             <th>#</th>
-            <th>Submission</th>
-            <th>Problem</th>
-            <th>Status</th>
-            <th>Date</th>
+            <th>{t('table.submission')}</th>
+            <th>{t('table.problem')}</th>
+            <th>{t('table.status')}</th>
+            <th>{t('table.date-created')}</th>
           </tr>
       )
     } else {
       return (
           <tr>
             <th>#</th>
-            <th>Pack</th>
-            <th>Complexity</th>
-            <th>Date created</th>
+            <th>{t('sideBar.pack')}</th>
+            <th>{t('table.complexity')}</th>
+            <th>{t('table.date-created')}</th>
           </tr>
       )
     }

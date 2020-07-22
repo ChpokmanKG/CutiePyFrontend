@@ -6,7 +6,7 @@ import ReactHtmlParser from 'react-html-parser';
 import Loading from "../components/Loading";
 import Editor from "../components/Editor";
 import MainContext from "../services/MainContext";
-
+import {useTranslation} from "react-i18next";
 
 
 interface ProblemInterface {
@@ -38,6 +38,8 @@ const Problem: any = (props:RouteComponentProps<any>) => {
     setCode(newValue);
   }
 
+  const {t} = useTranslation();
+
   useEffect(() => {
     fetchWithAuth(`main/problems/${props.match.params.id}`,{headers: {'Accept': 'application/json'}})
         .then(res => {
@@ -47,7 +49,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
           return res.json()
         })
         .then(json => {
-          Context.setTitle('Problem ' + json.title);
+          Context.setTitle(t('table.problem') + " " + json.title);
           setProblem(json)
         })
         .catch(e => console.error(e))
@@ -92,7 +94,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
   return (
       <Row className="problem">
         <Col md={6}>
-          <p>Description</p>
+          <p>{t('problem.description')}</p>
           {problem.title ? (
               <>
                 <div className="w-100 bg-white p-3 shadow rounded">
@@ -115,14 +117,14 @@ const Problem: any = (props:RouteComponentProps<any>) => {
             <Loading />
           </div>}
           <div className="position-sticky" style={{top: '20px'}}>
-          <p>Type your solution</p>
+          <p>{t('problem.type')}</p>
           <Editor code={code} onChange={onChange}/>
           {localStorage.getItem("cutie-py-token") ? (
               <div className="w-100 d-flex justify-content-around align-items-center mt-3">
-                <Button className="rounded pl-5 pr-5" color="success" onClick={sendContent}>Submit</Button>
-                or
+                <Button className="rounded pl-5 pr-5" color="success" onClick={sendContent}>{t('problem.submit')}</Button>
+                {t('problem.or')}
                 <Button className="rounded mr-3 pl-4 pr-4 text-light" onClick={handleClick}>
-                  Choose a file
+                  {t('problem.choose-file')}
                   <input type="file" id={"hidden-file-input"} onChange={handleChange} accept={".py"} style={{display: 'none'}}/>
                 </Button>
               </div>

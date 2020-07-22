@@ -7,17 +7,19 @@ import Loading from "../components/Loading";
 import {Submissions} from '../types';
 import Editor from "../components/Editor";
 import MainContext from "../services/MainContext";
+import {useTranslation} from "react-i18next";
 
 const Solution: any = (props:RouteComponentProps<any>) => {
 
   const [problem,setProblem] = useState< Submissions>();
   const Context = useContext(MainContext);
+  const {t} = useTranslation();
 
   useEffect(() => {
     fetchWithAuth(`main/files/?number=${props.match.params.id}`,{headers: {'Accept': 'application/json'}})
         .then(res => res.json())
         .then(json => {
-          Context.setTitle("Submission " + json[0].number);
+          Context.setTitle(t('table.submission') + " " + json[0].number);
           setProblem(json[0])
         })
         .catch(e => console.error(e))
@@ -26,7 +28,7 @@ const Solution: any = (props:RouteComponentProps<any>) => {
   return (
       <Row className="problem">
         <Col md={6}>
-          <p>Description</p>
+          <p>{t('problem.description')}</p>
           {problem?.problem_title ? (
               <>
                 <div className="w-100 bg-white p-3 shadow rounded">
@@ -35,7 +37,7 @@ const Solution: any = (props:RouteComponentProps<any>) => {
                     {ReactHtmlParser(problem.problem_content)}
                   </div>
                 </div>
-                <p className="mt-4">Status: {problem.status}</p>
+                <p className="mt-4">{t('problem.status')}: {problem.status}</p>
               </>
           ) : <div className={"w-100 text-center"}>
                 <Loading />
@@ -45,7 +47,7 @@ const Solution: any = (props:RouteComponentProps<any>) => {
         </Col>
         <Col md={6}>
           <p>
-            {problem?.username && `${problem.username}'s solution"`}
+            {problem?.username && `${problem.username}`}
           </p>
           <Editor code={problem?.content ? problem.content : "#Wait a second"}/>
         </Col>

@@ -12,13 +12,13 @@ import { useTranslation } from 'react-i18next';
 
 
 const PackTable = (props: RouteComponentProps<any>) => {
+  const {t} = useTranslation();
 
   const [table,setTable] = useState<any>([]);
-  const [sort,setSort] = useState<string>('Choose sort method');
+  const [sort,setSort] = useState<string>(t('table.sort-method'));
   const [solved,setSolved] = useState<Solved[]>([]);
 
   const Context = useContext(MainContext);
-  const {t} = useTranslation();
 
   useEffect(() => {
     Context.setTitle(t('sideBar.pack'));
@@ -62,12 +62,12 @@ const PackTable = (props: RouteComponentProps<any>) => {
   return (
       <>
         <UncontrolledDropdown className="mb-3 d-flex justify-content-end align-items-center">
-          <p className="mb-0 mr-3">Sort by</p>
+          <p className="mb-0 mr-3">{t('table.sort')}</p>
           <DropdownToggle caret className="text-capitalize">
             {sort}
           </DropdownToggle>
           <DropdownMenu>
-            {['hard','easy'].map((item: any,idx: number) => (
+            {[t('table.hard'),t('table.easy')].map((item: any,idx: number) => (
                 <DropdownItem className="text-capitalize" key={idx} onClick={() => sortBy(item)}>{item}</DropdownItem>
             ))}
           </DropdownMenu>
@@ -77,9 +77,9 @@ const PackTable = (props: RouteComponentProps<any>) => {
               <thead>
               <tr>
                 <th>#</th>
-                <th>Pack</th>
-                <th>Complexity</th>
-                <th>Date created</th>
+                <th>{t('sideBar.pack')}</th>
+                <th>{t('table.complexity')}</th>
+                <th>{t('table.date-created')}</th>
               </tr>
               </thead>
               <tbody>
