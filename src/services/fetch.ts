@@ -1,9 +1,10 @@
+import {parseJwt} from "./functions";
+import {DecodeToken} from "../types";
 export const url = "http://46.101.192.225:8008";
 
-const saveToken = (token: string):void => {
+export const saveToken = (token: string):void => {
   localStorage.setItem('cutie-py-token',token);
 }
-
 
 export const getTokenData =  (login: string,password: string):Promise<any> => {
   return fetch(`${url}/api/jwtauth/token/`,{
@@ -45,10 +46,13 @@ export const refreshToken = (token:string):Promise<any> => {
       .then(json => {
         let tokens = localStorage.getItem("cutie-py-token");
         if(tokens !== null) tokens = JSON.parse(tokens);
+        const parsedToken: DecodeToken = parseJwt(json.access);
+        console.log(parsedToken);
         // @ts-ignore
-        tokens.expires_in = json.expires_in;
+        tokens.exp = parsedToken.exp;
         // @ts-ignore
         tokens.access = json.access;
+
         saveToken(JSON.stringify(tokens));
         return tokens;
       })
@@ -69,7 +73,8 @@ export const fetchWithAuth = async (endpoint: string, options?: any):Promise<any
   }
 
   if(tokenData) {
-    if(Date.now() >= tokenData.expires_in * 1000) {
+    console.log("Its a fetch ",tokenData);
+    if(Date.now() >= tokenData.exp * 1000) {
       try {
         tokenData = await refreshToken(tokenData.refresh);
       }catch (e) {

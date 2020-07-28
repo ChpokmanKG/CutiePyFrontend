@@ -38,7 +38,7 @@ const PageHeader: any = () => {
   useEffect(() => {
     const tokens: Tokens = JSON.parse(localStorage.getItem("cutie-py-token") as string);
     if(tokens !== null) {
-      const decodeToken: DecodeToken = parseJwt(tokens.access);
+      const decodeToken: DecodeToken = JSON.parse(localStorage.getItem('cutie-py-token') as string);
       fetch(`${url}/api/jwtauth/user/${decodeToken.user_id}`)
           .then(res => res.json())
           .then(json => setUser(json))

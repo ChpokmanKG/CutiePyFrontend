@@ -7,6 +7,7 @@ import Loading from "./Loading";
 import MainContext from "../services/MainContext";
 import {parseJwt} from "../services/functions";
 import {Tokens,DecodeToken,Solved} from '../types';
+import AuthContext from '../components/AuthContext';
 import { useTranslation } from 'react-i18next';
 
 
@@ -15,6 +16,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
   const [table,setTable] = useState<any>([]);
   const [solved,setSolved] = useState<Solved[]>([]);
   const Context = useContext(MainContext);
+  const ContextAuth = useContext(AuthContext);
   const {t} = useTranslation();
 
 
@@ -34,11 +36,9 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
     const path: Array<string> = window.location.pathname.split('/');
     fetchData("main"+props.location.pathname);
 
-    if(path[1] === 'problems') {
-      const user:Tokens = JSON.parse(localStorage.getItem("cutie-py-token") as string);
-      const token: DecodeToken = parseJwt(user.access);
-      console.log(token.user_id);
-      fetchWithAuth(`main/problems/solved_by/${token.user_id}`,{
+    if(path[1] === 'problems' && ContextAuth.token) {
+      // @ts-ignore
+      fetchWithAuth(`main/problems/solved_by/${ContextAuth.token.user_id}`,{
         headers: {
           'Accept': 'application/json',
         }
@@ -48,7 +48,7 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
           .catch(e => console.error(e));
     }
 
-  },[props.location.pathname]);
+  },[props.location.pathname,ContextAuth.token]);
 
   const showTable = () => {
     const path = window.location.pathname.split('/');

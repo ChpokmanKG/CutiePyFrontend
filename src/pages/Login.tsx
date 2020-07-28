@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import {
   Container,
   Row,
@@ -11,9 +11,10 @@ import ReactHtmlParser from 'react-html-parser';
 import LoginRegisterHeader from '../components/LoginRegisterHeader';
 import {Redirect} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {getTokenData} from "../services/fetch";
+import {getTokenData, saveToken} from "../services/fetch";
 import Loading from "../components/Loading";
 import {url} from '../services/fetch';
+import AuthContext from "../components/AuthContext";
 
 interface UserLogin {
   username: string,
@@ -32,16 +33,19 @@ const LoginPage: React.FC = () => {
   const [loading,setLoading] = useState<boolean>(false);
   const [blog,setBlog] = useState<any>([]);
   const {t} = useTranslation();
+  const ContextAuth = useContext(AuthContext);
+
 
   const formSubmit = (event: React.FormEvent):void => {
     event.preventDefault();
     setLoading(true);
     getTokenData(data.username, data.password)
         .then(json => {
-          console.log(json)
           setRedirect(!redirect)
+          ContextAuth.setToken(json);
         })
-        .catch(() => {
+        .catch((e) => {
+          console.error(e);
           setData(user);
           setLoading(false);
           alert("Данные введены не верно");
@@ -75,6 +79,7 @@ const LoginPage: React.FC = () => {
             <Col md={6} className="d-flex align-items-center justify-content-center">
 
               <div className="w-75">
+
                 <p className="h4">
                   {t('loginPage.newsTitle')}
                 </p>

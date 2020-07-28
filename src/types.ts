@@ -33,6 +33,8 @@ export type EditorType = {
 }
 
 export type DecodeToken = {
+  access: string;
+  refresh: string;
   exp: number,
   jti: string,
   token_type: string,

@@ -12,6 +12,7 @@ import Solution from './pages/Solution';
 import ContextWrapper from "./components/ContextWrapper";
 import LeaderBoardTable from "./components/LeaderBoardTable";
 import PackTable from './components/PackTable';
+import AuthContextWrapper from "./components/AuthWrapper";
 
 const App: React.FC = () => {
 
@@ -35,15 +36,17 @@ const App: React.FC = () => {
             <Container>
               <PageHeaderWrap />
               <Switch>
-                <Route exact path={"/"} component={LoginPage}/>
-                <Route exact path={"/register"} component={Register}/>
-                <Route exact path={'/packs'} component={MainTable}/>
-                <Route exact path={'/packs/:id'} component={PackTable}/>
-                <Route exact path={'/problems/'} component={MainTable}/>
-                <Route exact path={'/problem/:id'} component={Problem}/>
-                <Route exact path={'/files/'} component={MainTable}/>
-                <Route exact path={'/leaderboard'} component={LeaderBoardTable}/>
-                <Route exact path={'/files/:id'} component={Solution}/>
+                <AuthContextWrapper>
+                  <Route exact path={"/"} component={LoginPage}/>
+                  <Route exact path={"/register"} component={Register}/>
+                  <Route exact path={'/packs'} component={MainTable}/>
+                  <Route exact path={'/packs/:id'} component={PackTable}/>
+                  <Route exact path={'/problems/'} component={MainTable}/>
+                  <Route exact path={'/problem/:id'} component={Problem}/>
+                  <Route exact path={'/files/'} component={MainTable}/>
+                  <Route exact path={'/leaderboard'} component={LeaderBoardTable}/>
+                  <Route exact path={'/files/:id'} component={Solution}/>
+                </AuthContextWrapper>
               </Switch>
             </Container>
           </Col>
