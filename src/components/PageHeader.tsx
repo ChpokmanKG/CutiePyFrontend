@@ -7,6 +7,7 @@ import {DecodeToken,Tokens} from "../types";
 import {parseJwt} from '../services/functions';
 
 interface User {
+  profile_picture: string;
   email: string,
   username: string,
   attempts: string,
@@ -27,6 +28,7 @@ const PageHeader: any = () => {
     username: '',
     attempts: '',
     first_name: '',
+    profile_picture: '',
     last_name: '',
     points: '',
     problems_failed: 0,
@@ -58,13 +60,13 @@ const PageHeader: any = () => {
         <div className="user d-flex align-items-center">
           <div className="mr-2">
             <img className="user__image rounded-circle"
-                 src={userImage}
+                 src={user.profile_picture ? user.profile_picture : userImage}
                  alt="user`s avatar"
                  />
           </div>
           <div>
             <p className="mb-0 user__name">{user.username}</p>
-            <p className="mb-0 user__rank">Rank: {user.rank}</p>
+            <p className="mb-0 user__rank">{user.rank ? `Rank: ${user.rank}` : "Loading"}</p>
           </div>
         </div>
 

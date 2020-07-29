@@ -54,14 +54,17 @@ const MainTable: any = (props: RouteComponentProps<any>) => {
     const path = window.location.pathname.split('/');
     Context.setTitle(t('sideBar.packs'))
     if(((path[1] === 'packs' || path[1] === '') && path[2] === undefined) && table.length) {
-      return table.map((item: Pack,idx:number) => (
-          <tr key={idx}>
-            <td>{idx + 1}</td>
-            <td><Link to={`/packs/${item.id}`}>{item.name}</Link></td>
-            <td>1</td>
-            <td>11.10.2020</td>
-          </tr>
-      ))
+      return table.map((item: Pack,idx:number) => {
+        // const date = new Date(item.);
+        return (
+            <tr key={idx}>
+              <td>{idx + 1}</td>
+              <td><Link to={`/packs/${item.id}`}>{item.name}</Link></td>
+              <td>1</td>
+              <td>11.10.2020</td>
+            </tr>
+        )
+      })
     }
     else if((path[1] === 'packs' && path[2] !== undefined) && table.problems) {
       Context.setTitle(t('sideBar.pack') + " " + table.name);
