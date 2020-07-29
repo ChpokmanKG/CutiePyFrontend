@@ -47,7 +47,7 @@ const PackTable = (props: RouteComponentProps<any>) => {
   const sortBy = (item: string) => {
     setSort(item);
     let sortedArray;
-    if(item === 'hard') {
+    if(item.toLowerCase() === 'hard') {
       sortedArray = table.problems.sort((a:Problem,b:Problem) => {
         return +b.complexity - +a.complexity;
       })
