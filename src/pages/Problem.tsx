@@ -14,7 +14,8 @@ interface ProblemInterface {
   created: string,
   id: number | null,
   pack: number | null,
-  title: string
+  title: string,
+  default_body: string
 }
 
 
@@ -31,7 +32,8 @@ const Problem: any = (props:RouteComponentProps<any>) => {
     created: '',
     id: null,
     pack: null,
-    title: ''
+    title: '',
+    default_body: "",
   });
 
   const onChange = (newValue: string): void => {
@@ -50,6 +52,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
         })
         .then(json => {
           Context.setTitle(t('table.problem') + " " + json.title);
+          setCode(json.default_body);
           setProblem(json)
         })
         .catch(e => console.error(e))
