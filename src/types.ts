@@ -29,7 +29,8 @@ export type Submissions = {
 
 export type EditorType = {
   code: string,
-  onChange?: (newValue: string) => void
+  onChange?: (newValue: string) => void,
+  lang: string
 }
 
 export type DecodeToken = {

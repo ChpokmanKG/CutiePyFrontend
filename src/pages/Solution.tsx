@@ -49,7 +49,7 @@ const Solution: any = (props:RouteComponentProps<any>) => {
           <p>
             {problem?.username && `${problem.username}`}
           </p>
-          <Editor code={problem?.content ? problem.content : "#Wait a second"}/>
+          <Editor lang="javascript" code={problem?.content ? problem.content : "#Wait a second"}/>
         </Col>
       </Row>
   )

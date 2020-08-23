@@ -1,5 +1,5 @@
 import React, {useEffect, useState,useContext} from 'react';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col, Button,UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import {RouteComponentProps, Link, Redirect} from 'react-router-dom';
 import {fetchWithAuth} from '../services/fetch';
 import ReactHtmlParser from 'react-html-parser';
@@ -24,6 +24,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
 
   const Context = useContext(MainContext);
   const [code, setCode] = useState<string>('');
+  const [currentLanguage,setCurrentLanguage] = useState<string>("javascript")
   const [redirect,setRedirect] = useState<boolean>(false);
   const [err,setError] = useState<boolean>(false);
   const [loading,setLoading] = useState<boolean>(false);
@@ -120,15 +121,30 @@ const Problem: any = (props:RouteComponentProps<any>) => {
             <Loading />
           </div>}
           <div className="position-sticky" style={{top: '20px'}}>
-          <p>{t('problem.type')}</p>
-          <Editor code={code} onChange={onChange}/>
+          <div className="d-flex justify-content-between align-items-center">
+            <p className="mb-0">{t('problem.type')}</p>
+            <UncontrolledDropdown>
+              <DropdownToggle caret className="text-capitalize">
+                {currentLanguage}
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem onClick={() => setCurrentLanguage("python")} className="text-capitalize">Python</DropdownItem>
+                <DropdownItem onClick={() => setCurrentLanguage("javascript")} className="text-capitalize">JavaScript</DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </div>
+          <Editor code={code} lang={currentLanguage} onChange={onChange}/>
           {localStorage.getItem("cutie-py-token") ? (
               <div className="w-100 d-flex justify-content-around align-items-center mt-3">
                 <Button className="rounded pl-5 pr-5" color="success" onClick={sendContent}>{t('problem.submit')}</Button>
                 {t('problem.or')}
                 <Button className="rounded mr-3 pl-4 pr-4 text-light" onClick={handleClick}>
                   {t('problem.choose-file')}
-                  <input type="file" id={"hidden-file-input"} onChange={handleChange} accept={".py"} style={{display: 'none'}}/>
+                  <input type="file"
+                         id={"hidden-file-input"}
+                         onChange={handleChange}
+                         accept={currentLanguage === 'python' ? ".py" : ".js"}
+                         style={{display: 'none'}}/>
                 </Button>
               </div>
           ) : (<div className="w-100 d-flex justify-content-around align-items-center mt-3">

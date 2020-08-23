@@ -1,9 +1,10 @@
 import React from 'react';
 import MonacoEditor from "react-monaco-editor";
 import { EditorType } from '../types';
-import "monaco-editor";
+// import "monaco-editor";
+import 'monaco-editor/esm/vs/editor/editor.main'
 
-const Editor = ({code, onChange}: EditorType) => {
+const Editor = ({code, onChange,lang}: EditorType) => {
 
   const options = {
     selectOnLineNumbers: true,
@@ -15,7 +16,7 @@ const Editor = ({code, onChange}: EditorType) => {
       <MonacoEditor
           width="100%"
           height="400"
-          language="python"
+          language={lang}
           theme="vs-dark"
           value={code}
           options={options}
