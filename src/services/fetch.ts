@@ -1,6 +1,6 @@
 import {parseJwt} from "./functions";
 import {DecodeToken} from "../types";
-export const url = "http://46.101.192.225:8008";
+export const url = "http://104.248.36.66:8000";
 
 export const saveToken = (token: string):void => {
   localStorage.setItem('cutie-py-token',token);
