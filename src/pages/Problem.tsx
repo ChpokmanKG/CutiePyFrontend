@@ -84,6 +84,7 @@ const Problem: any = (props:RouteComponentProps<any>) => {
     const formData = new FormData();
     formData.append("problem", props.match.params.id);
     formData.append('content',code);
+    formData.append('language', currentLanguage === 'javascript' ? 'JS' : 'PY')
     fetchWithAuth('main/files/upload/',{
       method: 'POST',
       body: formData
