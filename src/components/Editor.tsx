@@ -16,7 +16,7 @@ const Editor = ({code, onChange,lang}: EditorType) => {
       <MonacoEditor
           width="100%"
           height="400"
-          language={lang}
+          language="python"
           theme="vs-dark"
           value={code}
           options={options}
